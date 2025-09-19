@@ -20,10 +20,10 @@ int main (int argc, char* args[])
     SDL_Rect t = { 80,20, 10,10 };
     SDL_GetMouseState( &x, &y);
     SDL_Rect p = { x, y, 10,10};
-    SDL_Event evt;
     bool estado = 1;
+    SDL_Event evt;
     while (estado) {
-        Uint32 antes = SDL_GetTicks();
+        SDL_Event evt;
         SDL_SetRenderDrawColor(ren, 0xFF,0xFF,0xFF,0x00);
         SDL_RenderClear(ren);
         SDL_SetRenderDrawColor(ren, 0x00,0x00,0xFF,0x00);
@@ -31,6 +31,7 @@ int main (int argc, char* args[])
         SDL_RenderFillRect(ren, &t);
         SDL_RenderDrawRect(ren, &p);
         SDL_RenderPresent(ren);
+        Uint32 antes = SDL_GetTicks();
         int isevt = SDL_WaitEventTimeout(&evt, espera);
         if (isevt) {
           espera -= (SDL_GetTicks() - antes);
