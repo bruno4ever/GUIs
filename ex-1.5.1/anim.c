@@ -35,7 +35,7 @@ int main (int argc, char* args[])
         SDL_RenderFillRect(ren, &t);
         SDL_RenderDrawRect(ren, &p);
         SDL_RenderPresent(ren);
-        int isevt = SDL_WaitEventTimeout(&evt, 500);
+        int isevt = SDL_WaitEventTimeout(&evt, espera);
         if (isevt) {
           espera -= (SDL_GetTicks() - antes);
           if (evt.type == SDL_KEYDOWN) {
