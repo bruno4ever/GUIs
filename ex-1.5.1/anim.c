@@ -22,10 +22,6 @@ int main (int argc, char* args[])
     SDL_Rect p = { x, y, 10,10};
     SDL_Event evt;
     bool estado = 1;
-    int time = 0;
-    while (time != 0) {
- 
-    } 
     while (estado) {
         Uint32 antes = SDL_GetTicks();
         SDL_SetRenderDrawColor(ren, 0xFF,0xFF,0xFF,0x00);
