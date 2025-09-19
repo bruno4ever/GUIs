@@ -1,6 +1,24 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
  
+int AUX_WaitEventTimeout(SDL_Event* evt, Uint32* ms) {
+    Uint32 antes = SDL_GetTicks();
+
+    int ret = SDL_WaitEventTimeout(evt, *ms);
+
+    Uint32 depois = SDL_GetTicks();
+    Uint32 d = depois - antes;
+
+    if (d >= *ms) {
+        *ms = 0;
+    } else {
+        *ms -= d;
+    }
+
+    return ret;
+}
+
+
 int main (int argc, char* args[])
 {
     /* INICIALIZACAO */
@@ -11,11 +29,11 @@ int main (int argc, char* args[])
                          200, 100, SDL_WINDOW_SHOWN
                       );
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, 0);
- 
+    
     /* EXECUÇÃO */
     int x;
     int y;
-    int espera = 500;
+    Uint32 espera = 500;
     SDL_Rect r = { 40,20, 10,10 };
     SDL_Rect t = { 80,20, 10,10 };
     SDL_GetMouseState( &x, &y);
@@ -31,10 +49,9 @@ int main (int argc, char* args[])
         SDL_RenderFillRect(ren, &t);
         SDL_RenderDrawRect(ren, &p);
         SDL_RenderPresent(ren);
-        Uint32 antes = SDL_GetTicks();
-        int isevt = SDL_WaitEventTimeout(&evt, espera);
+        int isevt = AUX_WaitEventTimeout(&evt, &espera);
         if (isevt) {
-          espera -= (SDL_GetTicks() - antes);
+
           if (evt.type == SDL_KEYDOWN) {
             switch (evt.key.keysym.sym) {
                 case SDLK_UP:
