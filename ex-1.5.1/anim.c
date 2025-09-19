@@ -15,6 +15,7 @@ int main (int argc, char* args[])
     /* EXECUÇÃO */
     int x;
     int y;
+    int espera = 500;
     SDL_Rect r = { 40,20, 10,10 };
     SDL_Rect t = { 80,20, 10,10 };
     SDL_GetMouseState( &x, &y);
@@ -26,6 +27,7 @@ int main (int argc, char* args[])
  
     } 
     while (estado) {
+        Uint32 antes = SDL_GetTicks();
         SDL_SetRenderDrawColor(ren, 0xFF,0xFF,0xFF,0x00);
         SDL_RenderClear(ren);
         SDL_SetRenderDrawColor(ren, 0x00,0x00,0xFF,0x00);
@@ -35,19 +37,20 @@ int main (int argc, char* args[])
         SDL_RenderPresent(ren);
         int isevt = SDL_WaitEventTimeout(&evt, 500);
         if (isevt) {
+          espera -= (SDL_GetTicks() - antes);
           if (evt.type == SDL_KEYDOWN) {
             switch (evt.key.keysym.sym) {
                 case SDLK_UP:
-                    r.y -= 5;
+                    r.y -= 2;
                     break;
                 case SDLK_DOWN:
-                    r.y += 5;
+                    r.y += 2;
                     break;
                 case SDLK_LEFT:
-                    r.x -= 5;
+                    r.x -= 2;
                     break;
                 case SDLK_RIGHT:
-                    r.x += 5;
+                    r.x += 2;
                     break;
             }
          }
@@ -64,8 +67,9 @@ int main (int argc, char* args[])
           }
      }
      else {
-       t.y += 5;
-       t.x -= 5;
+       espera = 500;
+       t.y += 2;
+       t.x -= 2;
      }
     }
  
