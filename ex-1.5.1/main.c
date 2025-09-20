@@ -46,7 +46,9 @@ int main (int argc, char* args[])
         SDL_RenderClear(ren);
         SDL_SetRenderDrawColor(ren, 0x00,0x00,0xFF,0x00);
         SDL_RenderFillRect(ren, &r);
+        SDL_SetRenderDrawColor(ren, 0xFF, 0x00, 0x00, 0x00);
         SDL_RenderFillRect(ren, &t);
+        SDL_SetRenderDrawColor(ren, 0x00, 0x00, 0x00, 0x00);
         SDL_RenderDrawRect(ren, &p);
         SDL_RenderPresent(ren);
         int isevt = AUX_WaitEventTimeout(&evt, &espera);
