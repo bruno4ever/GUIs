@@ -26,14 +26,14 @@ int main (int argc, char* args[])
     SDL_Window* win = SDL_CreateWindow("Movendo um Retângulo",
                          SDL_WINDOWPOS_UNDEFINED,
                          SDL_WINDOWPOS_UNDEFINED,
-                         200, 100, SDL_WINDOW_SHOWN
+                         200, 200, SDL_WINDOW_SHOWN
                       );
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, 0);
     
     /* EXECUÇÃO */
     int x;
     int y;
-    Uint32 espera = 500;
+    Uint32 espera = 100;
     SDL_Rect r = { 40,20, 10,10 };
     SDL_Rect t = { 80,20, 10,10 };
     SDL_GetMouseState( &x, &y);
@@ -55,16 +55,16 @@ int main (int argc, char* args[])
           if (evt.type == SDL_KEYDOWN) {
             switch (evt.key.keysym.sym) {
                 case SDLK_UP:
-                    r.y -= 2;
+                    r.y -= 1;
                     break;
                 case SDLK_DOWN:
-                    r.y += 2;
+                    r.y += 1;
                     break;
                 case SDLK_LEFT:
-                    r.x -= 2;
+                    r.x -= 1;
                     break;
                 case SDLK_RIGHT:
-                    r.x += 2;
+                    r.x += 1;
                     break;
             }
          }
@@ -81,13 +81,11 @@ int main (int argc, char* args[])
           }
      }
      else {
-       espera = 500;
-       t.y += 2;
-       t.x -= 2;
+       espera = 100;
+       t.x += 1;
      }
     }
- 
-    /* FINALIZACAO */
+
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();
