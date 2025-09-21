@@ -53,10 +53,10 @@ int main(int argc, char* args[]) {
     SDL_Texture* img = IMG_LoadTexture(ren, "01.png");
     assert(img != NULL);
 
-    SDL_Rect q1 = { 100, 100, 20, 20 };  
-    SDL_Rect q2 = { 200, 100, 20, 20 };    
-    SDL_Rect q3 = { 200, 200, 20, 20 };      
-    SDL_Rect q4 = { 100, 200, 20, 20 };   
+    SDL_Rect q1 = { 100, 100, 40, 40 };  
+    SDL_Rect q2 = { 200, 100, 40, 40 };    
+    SDL_Rect q3 = { 200, 200, 40, 40 };      
+    SDL_Rect q4 = { 100, 200, 40, 40 };   
     Uint32 espera = 100;
     int vel = 1;
     SDL_Event evt;
