@@ -8,20 +8,19 @@ int AUX_WaitEventTimeout(SDL_Event* evt, Uint32* ms) {
     int ret = SDL_WaitEventTimeout(evt, *ms);
     Uint32 depois = SDL_GetTicks();
     Uint32 d = depois - antes;
-    if (d >= *ms) {
+    if (d >= *ms)
         *ms = 0;
-    } else {
+    else
         *ms -= d;
-    }
     return ret;
 }
 
-void mover(SDL_Rect* q1, SDL_Rect* q2, SDL_Rect* q3, SDL_Rect* q4, int* vel, SDL_Renderer* ren){
+void mover(SDL_Rect* q1, SDL_Rect* q2, SDL_Rect* q3, SDL_Rect* q4, int* vel){
     // vermelho
     if (q1->x < 200 && q1->y == 100) q1->x += *vel;
     else if (q1->x >= 200 && q1->y < 200) q1->y += *vel;
     else if (q1->y >= 200 && q1->x > 100) q1->x -= *vel;
-    else if (q1->x <= 100 && q1->y > 100)q1->y -= *vel;
+    else if (q1->x <= 100 && q1->y > 100) q1->y -= *vel;
 
     // verde
     if (q2->y < 200 && q2->x == 200) q2->y += *vel;
@@ -57,54 +56,57 @@ int main(int argc, char* args[]) {
     SDL_Rect q2 = { 200, 100, 40, 40 };    
     SDL_Rect q3 = { 200, 200, 40, 40 };      
     SDL_Rect q4 = { 100, 200, 40, 40 };   
-    Uint32 espera = 100;
-    int vel = 1;
-    SDL_Event evt;
 
+    int vel = 1;
     bool estado = true;
     bool pausado = false;
     bool move = false;
+
+    Uint32 ultimoFrame = SDL_GetTicks();
+    Uint32 intervaloAnim = 500;
+    Uint32 espera = 100;
+
+    SDL_Event evt;
     while (estado) {
-        SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
-        SDL_RenderClear(ren);
-        SDL_Rect c;
-        if (move) c = (SDL_Rect) {100, 0, 100, 80};
-        else c = (SDL_Rect) {0, 0, 100, 80};
-        SDL_RenderCopy(ren, img, &c, &q1);
-        SDL_RenderCopy(ren, img, &c, &q2);
-        SDL_RenderCopy(ren, img, &c, &q3);
-        SDL_RenderCopy(ren, img, &c, &q4);
-
-
-        SDL_RenderPresent(ren);
-
+        Uint32 agora = SDL_GetTicks();
         int isevt = AUX_WaitEventTimeout(&evt, &espera);
         if (isevt) {
             if (evt.type == SDL_QUIT) {
                 estado = false;
             }
             else if (evt.type == SDL_KEYDOWN) {
-              // ao apertar espaço, toda a animaçao é pausada
-               if (evt.key.keysym.sym == SDLK_SPACE) {
+                if (evt.key.keysym.sym == SDLK_SPACE)
                     pausado = !pausado;
-                }
-              // enquanto pressionar a seta para cima, a velocidade da animaçao duplica
-              else if (evt.key.keysym.sym == SDLK_UP) {
+                else if (evt.key.keysym.sym == SDLK_UP)
                     vel = 2;
-              }
             }
-              else if (evt.type == SDL_KEYUP) {
-                // quando soltar a seta para cima, a velocidade da animaçao volta ao normal
-                if (evt.key.keysym.sym == SDLK_UP) {
-                  vel = 1;
-                }
-              }
-        } 
-        else if (pausado == false) {
-            mover(&q1, &q2, &q3, &q4, &vel, ren);
-            move = !move;
+            else if (evt.type == SDL_KEYUP) {
+                if (evt.key.keysym.sym == SDLK_UP)
+                    vel = 1;
+            }
+        }
+
+        else if (!pausado) {
+            mover(&q1, &q2, &q3, &q4, &vel);
+            if (agora - ultimoFrame >= intervaloAnim) {
+              move = !move;
+              ultimoFrame = agora;
+            }
             espera = 100;
         }
+
+        SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
+        SDL_RenderClear(ren);
+
+        SDL_Rect c = move ? (SDL_Rect){100, 0, 100, 80}
+                          : (SDL_Rect){0, 0, 100, 80};
+
+        SDL_RenderCopy(ren, img, &c, &q1);
+        SDL_RenderCopy(ren, img, &c, &q2);
+        SDL_RenderCopy(ren, img, &c, &q3);
+        SDL_RenderCopy(ren, img, &c, &q4);
+
+        SDL_RenderPresent(ren);
     }
 
     SDL_DestroyTexture(img);
