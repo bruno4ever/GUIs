@@ -70,6 +70,16 @@ int main(int argc, char* args[]) {
     while (estado) {
         Uint32 agora = SDL_GetTicks();
         int isevt = AUX_WaitEventTimeout(&evt, &espera);
+        SDL_SetRenderDrawColor(ren, 255, 255, 255, 255); 
+        SDL_RenderClear(ren); SDL_Rect c; 
+        if (move) c = (SDL_Rect) {100, 0, 100, 80}; 
+        else c = (SDL_Rect) {0, 0, 100, 80}; 
+        SDL_RenderCopy(ren, img, &c, &q1); 
+        SDL_RenderCopy(ren, img, &c, &q2); 
+        SDL_RenderCopy(ren, img, &c, &q3); 
+        SDL_RenderCopy(ren, img, &c, &q4); 
+        SDL_RenderPresent(ren);
+        
         if (isevt) {
             if (evt.type == SDL_QUIT) {
                 estado = false;
@@ -94,19 +104,6 @@ int main(int argc, char* args[]) {
             }
             espera = 100;
         }
-
-        SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
-        SDL_RenderClear(ren);
-
-        SDL_Rect c = move ? (SDL_Rect){100, 0, 100, 80}
-                          : (SDL_Rect){0, 0, 100, 80};
-
-        SDL_RenderCopy(ren, img, &c, &q1);
-        SDL_RenderCopy(ren, img, &c, &q2);
-        SDL_RenderCopy(ren, img, &c, &q3);
-        SDL_RenderCopy(ren, img, &c, &q4);
-
-        SDL_RenderPresent(ren);
     }
 
     SDL_DestroyTexture(img);
