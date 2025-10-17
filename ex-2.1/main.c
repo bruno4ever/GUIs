@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
         break;
         }
         if (evt.type == SDL_USEREVENT) {
-            printf("Múltiplos cliques detectados: %d cliques!\n", evt.user.code);
+            printf("Múltiplos cliques detectados: %d vezes!\n", evt.user.code);
         }
     }
 
