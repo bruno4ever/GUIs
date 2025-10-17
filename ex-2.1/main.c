@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
                         n++;
                         espera = 250;
                     } 
-                }
-                else if (n > 1) { // checar se realmente foram multiplos cliques, nao apenas um 
+            }
+            else if (n > 1) { // checar se realmente foram multiplos cliques, nao apenas um 
                 SDL_Event userEvent;
                 SDL_memset(&userEvent, 0, sizeof(userEvent));
                 userEvent.type = SDL_USEREVENT;
@@ -69,11 +69,11 @@ int main(int argc, char* argv[]) {
                 SDL_PushEvent(&userEvent);
                 n = 0;
                 estado = ESPERANDO_CLIQUE;
-                }
-                else {
-                    n = 0;
-                    estado = ESPERANDO_CLIQUE;
-                }
+            }
+            else {
+                n = 0;
+                estado = ESPERANDO_CLIQUE;
+            }
         break;
         }
         if (evt.type == SDL_USEREVENT) {
