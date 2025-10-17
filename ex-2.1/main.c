@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
                     rodando = false;
                 }
                 else if (evt.type == SDL_MOUSEBUTTONDOWN) {
-                        n = n + 1;
+                        n++;
                         espera = 250;
                     } 
                 }
