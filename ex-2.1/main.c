@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     SDL_Event evt;
     Estado estado = ESPERANDO_CLIQUE;
 
-    int contador = 0;
+    int n = 0;
     Uint32 espera = -1;
     
     while (rodando) {
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
                 rodando = false;
             }
             else if (evt.type == SDL_MOUSEBUTTONDOWN) {
-                contador = 1;
+                n = 1;
                 espera = 250;
                 estado = CONTANDO_CLIQUES;
             }
@@ -59,17 +59,17 @@ int main(int argc, char* argv[]) {
                     rodando = false;
                 }
                 else if (evt.type == SDL_MOUSEBUTTONDOWN) {
-                        contador = contador + 1;
+                        n = n + 1;
                         espera = 250;
                     } 
                 }
-                else if (contador > 1) { // checar se realmente foram multiplos cliques, nao apenas um 
+                else if (n > 1) { // checar se realmente foram multiplos cliques, nao apenas um 
                 SDL_Event userEvent;
                 SDL_memset(&userEvent, 0, sizeof(userEvent));
                 userEvent.type = SDL_USEREVENT;
-                userEvent.user.code = contador;
+                userEvent.user.code = n;
                 SDL_PushEvent(&userEvent);
-                contador = 0;
+                n = 0;
                 estado = ESPERANDO_CLIQUE;
                 }
         break;
