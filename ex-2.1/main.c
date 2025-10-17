@@ -8,10 +8,12 @@ int AUX_WaitEventTimeout(SDL_Event* evt, Uint32* ms) {
     Uint32 depois = SDL_GetTicks();
     Uint32 d = depois - antes;
   
+    if (ret) {
     if (d >= *ms)
         *ms = 0;
     else
         *ms -= d;
+    }
 
     return ret;
 }
@@ -39,7 +41,6 @@ int main(int argc, char* argv[]) {
         SDL_RenderClear(ren);
         SDL_RenderPresent(ren);
         int isevt = AUX_WaitEventTimeout(&evt, &espera);
-      
         switch (estado) {
         case ESPERANDO_CLIQUE:
             if (evt.type == SDL_QUIT) {
@@ -62,7 +63,7 @@ int main(int argc, char* argv[]) {
                         espera = 250;
                     } 
                 }
-                else {
+                else if (contador > 1) { // checar se realmente foram multiplos cliques, nao apenas um 
                 SDL_Event userEvent;
                 SDL_memset(&userEvent, 0, sizeof(userEvent));
                 userEvent.type = SDL_USEREVENT;
