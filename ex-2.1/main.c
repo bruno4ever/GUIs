@@ -8,12 +8,10 @@ int AUX_WaitEventTimeout(SDL_Event* evt, Uint32* ms) {
     Uint32 depois = SDL_GetTicks();
     Uint32 d = depois - antes;
   
-    if (ret) {
     if (d >= *ms)
         *ms = 0;
     else
         *ms -= d;
-    }
 
     return ret;
 }
