@@ -70,6 +70,10 @@ int main(int argc, char* argv[]) {
                 n = 0;
                 estado = ESPERANDO_CLIQUE;
                 }
+                else {
+                    n = 0;
+                    estado = ESPERANDO_CLIQUE;
+                }
         break;
         }
         if (evt.type == SDL_USEREVENT) {
