@@ -25,7 +25,7 @@ typedef enum {
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_EVERYTHING);
-    SDL_Window* win = SDL_CreateWindow("Multiplos Cliques", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED, 400, 400, SDL_WINDOW_SHOWN);
+    SDL_Window* win = SDL_CreateWindow("Múltiplos Cliques", SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED, 400, 400, SDL_WINDOW_SHOWN);
     SDL_Renderer* ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
 
     bool rodando = true;
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
         break;
         }
         if (evt.type == SDL_USEREVENT) {
-            printf("Múltiplos cliques detectados: %d vezes!\n", evt.user.code);
+            printf("Múltiplos cliques detectados: %d cliques!\n", evt.user.code);
         }
     }
 
