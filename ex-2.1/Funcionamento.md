@@ -6,15 +6,11 @@ O programa manipula os estados de um quadrado utilizando o mouse.
 
 ##  Comportamento
 
-- **1 Clique:**  
-  Cria o quadrado na tela, na mesma posição do clique.
-
----
-
-##  Casos de Múltiplos Cliques
+###  Casos de Múltiplos Cliques
 
 | Número de Cliques | Ação |
 |--------------------|------|
+| **1 Clique** | Cria o quadrado na tela, na mesma posição do clique.. |
 | **2 Cliques** | O quadrado muda de cor. |
 | **3 Cliques** | O quadrado aumenta de tamanho. |
 | **4 Cliques** | O quadrado diminui de tamanho. |
