@@ -33,13 +33,19 @@ int main(int argc, char* argv[]) {
     int n = 0;
     Uint32 espera = -1;
     int x_ref = 0, y_ref = 0;
+
+    bool temQuadrado = false;
+    SDL_Rect q = {40, 40, 80, 80};
+    SDL_Color cor = {0, 200, 255, 255};
     
     while (rodando) {
 
         SDL_SetRenderDrawColor(ren, 255, 255, 255, 255);
         SDL_RenderClear(ren);
-        SDL_RenderPresent(ren);
         int isevt = AUX_WaitEventTimeout(&evt, &espera);
+
+        if (temQuadrado) SDL_SetRenderDrawColor(ren, cor.r, cor.g, cor.b, 255); SDL_RenderFillRect(ren, &q);
+        
         switch (estado) {
         case ESPERANDO_CLIQUE:
             if (evt.type == SDL_QUIT) {
@@ -49,6 +55,7 @@ int main(int argc, char* argv[]) {
                 n = 1;
                 x_ref = evt.button.x;
                 y_ref = evt.button.y;
+                if (!temQuadrado) q = (SDL_Rect) {x_ref, y_ref, 80, 80}; temQuadrado = true;
                 espera = 250;
                 estado = CONTANDO_CLIQUES;
                 
@@ -64,7 +71,7 @@ int main(int argc, char* argv[]) {
                     if (evt.button.x == x_ref && evt.button.y == y_ref) {
                         n++;
                         espera = 250;
-                    } else {
+                     } else {
                         n = 0;
                         estado = ESPERANDO_CLIQUE;
                     }
@@ -87,7 +94,40 @@ int main(int argc, char* argv[]) {
         }
         if (evt.type == SDL_USEREVENT) {
             printf("Múltiplos cliques detectados: %d vezes!\n", evt.user.code);
+            int count = evt.user.code;
+            switch (count) {
+                case 2: // muda cor
+                    if (temQuadrado)
+                        cor = (SDL_Color){rand() % 256, rand() % 256, rand() % 256, 255};
+                    break;
+
+                case 3: // aumenta tamanho
+                    if (temQuadrado) {
+                        q.w += 20;
+                        q.h += 20;
+                        q.x -= 10;
+                        q.y -= 10;
+                    }
+                    break;
+
+                case 4: // diminui tamanho
+                    if (temQuadrado && q.w > 40) {
+                        q.w -= 20;
+                        q.h -= 20;
+                        q.x += 10;
+                        q.y += 10;
+                    }
+                    break;
+
+                case 5: // remove
+                    temQuadrado = false;
+                    break;
+
+
+            break;
+            }
         }
+        SDL_RenderPresent(ren);
     }
 
     SDL_DestroyRenderer(ren);
