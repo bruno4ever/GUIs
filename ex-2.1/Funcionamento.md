@@ -18,4 +18,4 @@ O programa manipula os estados de um quadrado utilizando o mouse.
 
 ---
 
-- Cada clique deve ocorrer na mesma posição e dentro de um intervalo de 250 sm para ser considerado um cliquemúltiplo.
+- Cada clique deve ocorrer na mesma posição e dentro de um intervalo de 250 sm para ser considerado um clique múltiplo.
